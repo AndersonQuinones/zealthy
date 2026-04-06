@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import * as fs from 'fs';
 
 const adapter = new PrismaPg({
-  connectionString: 'postgresql://postgres:postgres123@localhost:5432/zealthy?schema=public',
+  connectionString: 'postgresql://postgres:UGCzwsZHfttOhrrxOncHFpsTBwzvwxVe@maglev.proxy.rlwy.net:17732/railway',
 });
 
 const prisma = new PrismaClient({ adapter });
