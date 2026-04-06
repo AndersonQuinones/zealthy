@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Patient {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  dateOfBirth   String?
+  phone         String?
+  createdAt     DateTime       @default(now())
+  appointments  Appointment[]
+  prescriptions Prescription[]
+}
+
+model Appointment {
+  id           Int       @id @default(autoincrement())
+  providerName String
+  dateTime     DateTime
+  repeat       String?
+  endDate      DateTime?
+  patientId    Int
+  patient      Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+}
+
+model Prescription {
+  id             Int      @id @default(autoincrement())
+  medication     String
+  dosage         String
+  quantity       Int
+  refillDate     DateTime
+  refillSchedule String
+  patientId      Int
+  patient        Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+}
