@@ -4,9 +4,8 @@ import * as bcrypt from 'bcryptjs';
 import * as fs from 'fs';
 
 const adapter = new PrismaPg({
-  connectionString: 'postgresql://postgres:UGCzwsZHfttOhrrxOncHFpsTBwzvwxVe@maglev.proxy.rlwy.net:17732/railway',
+  connectionString: 'postgresql://postgres:LmfRE%2FbHp7Z56-%2F@db.pumstbxkfereqsyyezqu.supabase.co:5432/postgres',
 });
-
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
