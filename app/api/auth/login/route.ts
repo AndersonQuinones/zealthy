@@ -8,16 +8,20 @@ const JWT_SECRET = 'zealthy_secret_123';
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
+    console.log('Login attempt for:', email);
 
     const patient = await prisma.patient.findUnique({
       where: { email },
     });
+    console.log('Patient found:', !!patient);
 
     if (!patient) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     const valid = await bcrypt.compare(password, patient.password);
+    console.log('Password valid:', valid);
+
     if (!valid) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
@@ -30,13 +34,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       token,
-      patient: {
-        id: patient.id,
-        name: patient.name,
-        email: patient.email,
-      }
+      patient: { id: patient.id, name: patient.name, email: patient.email }
     });
-  } catch {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+  } catch (error) {
+    console.error('Login error:', error);
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }
